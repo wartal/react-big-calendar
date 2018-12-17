@@ -667,6 +667,7 @@ class Calendar extends React.Component {
       eventContainerWrapper: elementType,
       dayWrapper: elementType,
       dateCellWrapper: elementType,
+      timeGridHeader: elementType,
       timeSlotWrapper: elementType,
       timeGutterHeader: elementType,
 
@@ -952,7 +953,11 @@ class Calendar extends React.Component {
     }
 
     let views = this.getViews()
-    this.handleRangeChange(this.props.date || this.props.getNow(), views[view], view)
+    this.handleRangeChange(
+      this.props.date || this.props.getNow(),
+      views[view],
+      view
+    )
   }
 
   handleSelectEvent = (...args) => {

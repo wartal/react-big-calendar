@@ -10,7 +10,7 @@ import DayColumn from './DayColumn'
 import TimeGutter from './TimeGutter'
 
 import getWidth from 'dom-helpers/query/width'
-import TimeGridHeader from './TimeGridHeader'
+import DefaultTimeGridHeader from './TimeGridHeader'
 import { notify } from './utils/helpers'
 import { inRange, sortEvents } from './utils/eventLevels'
 import Resources from './utils/Resources'
@@ -94,7 +94,7 @@ export default class TimeGrid extends Component {
     raf.cancel(this.rafHandle)
     this.rafHandle = raf(this.checkOverflow)
   }
-  
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize)
 
@@ -145,7 +145,7 @@ export default class TimeGrid extends Component {
     let { min, max, components, accessors, localizer } = this.props
 
     const resources = this.memoizedResources(this.props.resources, accessors)
-    const groupedEvents = resources.groupEvents(events) 
+    const groupedEvents = resources.groupEvents(events)
 
     return resources.map(([id, resource], i) =>
       range.map((date, jj) => {
@@ -203,6 +203,8 @@ export default class TimeGrid extends Component {
 
     let allDayEvents = [],
       rangeEvents = []
+
+    let TimeGridHeader = components.timeGridHeader || DefaultTimeGridHeader
 
     events.forEach(event => {
       if (inRange(event, start, end, accessors)) {
@@ -316,5 +318,7 @@ export default class TimeGrid extends Component {
     }
   }
 
-  memoizedResources = memoize((resources, accessors) => Resources(resources, accessors))
+  memoizedResources = memoize((resources, accessors) =>
+    Resources(resources, accessors)
+  )
 }
