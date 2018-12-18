@@ -4,9 +4,9 @@ import scrollbarSize from 'dom-helpers/util/scrollbarSize'
 import React from 'react'
 
 import dates from './utils/dates'
-import DateContentRow from './DateContentRow'
 import Header from './Header'
 import { notify } from './utils/helpers'
+import DefaultTimeGridResourceHeader from './TimeGridResourceHeader'
 
 class TimeGridHeader extends React.Component {
   static propTypes = {
@@ -86,47 +86,6 @@ class TimeGridHeader extends React.Component {
       )
     })
   }
-  renderRow = resource => {
-    let {
-      events,
-      rtl,
-      selectable,
-      getNow,
-      range,
-      getters,
-      localizer,
-      accessors,
-      components,
-    } = this.props
-
-    const resourceId = accessors.resourceId(resource)
-    let eventsToDisplay = resource
-      ? events.filter(event => accessors.resource(event) === resourceId)
-      : events
-
-    return (
-      <DateContentRow
-        isAllDay
-        rtl={rtl}
-        getNow={getNow}
-        minRows={2}
-        range={range}
-        events={eventsToDisplay}
-        resourceId={resourceId}
-        className="rbc-allday-cell"
-        selectable={selectable}
-        selected={this.props.selected}
-        components={components}
-        accessors={accessors}
-        getters={getters}
-        localizer={localizer}
-        onSelect={this.props.onSelectEvent}
-        onDoubleClick={this.props.onDoubleClickEvent}
-        onSelectSlot={this.props.onSelectSlot}
-        longPressThreshold={this.props.longPressThreshold}
-      />
-    )
-  }
 
   render() {
     let {
@@ -134,14 +93,9 @@ class TimeGridHeader extends React.Component {
       rtl,
       resources,
       range,
-      events,
-      getNow,
       accessors,
-      selectable,
       components,
-      getters,
       scrollRef,
-      localizer,
       isOverflowing,
       components: { timeGutterHeader: TimeGutterHeader },
     } = this.props
@@ -151,7 +105,8 @@ class TimeGridHeader extends React.Component {
       style[rtl ? 'marginLeft' : 'marginRight'] = `${scrollbarSize()}px`
     }
 
-    const groupedEvents = resources.groupEvents(events)
+    let TimeGridResourceHeader =
+      components.timeGridResourceHeader || DefaultTimeGridResourceHeader
 
     return (
       <div
@@ -169,11 +124,11 @@ class TimeGridHeader extends React.Component {
         {resources.map(([id, resource], idx) => (
           <div className="rbc-time-header-content" key={id || idx}>
             {resource && (
-              <div className="rbc-row rbc-row-resource">
-                <div key={`resource_${idx}`} className="rbc-header">
-                  {accessors.resourceTitle(resource)}
-                </div>
-              </div>
+              <TimeGridResourceHeader
+                idx={idx}
+                accessors={accessors}
+                resource={resource}
+              />
             )}
             <div
               className={`rbc-row rbc-time-header-cell${
@@ -182,26 +137,27 @@ class TimeGridHeader extends React.Component {
             >
               {this.renderHeaderCells(range)}
             </div>
-            <DateContentRow
-              isAllDay
-              rtl={rtl}
-              getNow={getNow}
-              minRows={2}
-              range={range}
-              events={groupedEvents.get(id) || []}
-              resourceId={resource && id}
-              className="rbc-allday-cell"
-              selectable={selectable}
-              selected={this.props.selected}
-              components={components}
-              accessors={accessors}
-              getters={getters}
-              localizer={localizer}
-              onSelect={this.props.onSelectEvent}
-              onDoubleClick={this.props.onDoubleClickEvent}
-              onSelectSlot={this.props.onSelectSlot}
-              longPressThreshold={this.props.longPressThreshold}
-            />
+            {/*<DateContentRow*/}
+            {/*isAllDay={false}*/}
+            {/*rtl={rtl}*/}
+            {/*getNow={getNow}*/}
+            {/*minRows={2}*/}
+            {/*range={range}*/}
+            {/*events={groupedEvents.get(id) || []}*/}
+            {/*resourceId={resource && id}*/}
+            {/*className="rbc-allday-cell"*/}
+            {/*selectable={selectable}*/}
+            {/*selected={this.props.selected}*/}
+            {/*components={components}*/}
+            {/*accessors={accessors}*/}
+            {/*getters={getters}*/}
+            {/*localizer={localizer}*/}
+            {/*onSelect={this.props.onSelectEvent}*/}
+            {/*onDoubleClick={this.props.onDoubleClickEvent}*/}
+            {/*onSelectSlot={this.props.onSelectSlot}*/}
+            {/*longPressThreshold={this.props.longPressThreshold}*/}
+            {/*renderForMeasure={false}*/}
+            {/*/>*/}
           </div>
         ))}
       </div>

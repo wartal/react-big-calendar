@@ -110,28 +110,6 @@ class DateContentRow extends React.Component {
     })
   }
 
-  renderDummy = () => {
-    let { className, range, renderHeader } = this.props
-    return (
-      <div className={className}>
-        <div className="rbc-row-content">
-          {renderHeader && (
-            <div className="rbc-row" ref={this.createHeadingRef}>
-              {range.map(this.renderHeadingCell)}
-            </div>
-          )}
-          <div className="rbc-row" ref={this.createEventRef}>
-            <div className="rbc-row-segment">
-              <div className="rbc-event">
-                <div className="rbc-event-content">&nbsp;</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   render() {
     const {
       date,
@@ -140,8 +118,6 @@ class DateContentRow extends React.Component {
       className,
       selected,
       selectable,
-      renderForMeasure,
-
       accessors,
       getters,
       components,
@@ -157,8 +133,6 @@ class DateContentRow extends React.Component {
       longPressThreshold,
       isAllDay,
     } = this.props
-
-    if (renderForMeasure) return this.renderDummy()
 
     let metrics = this.slotMetrics(this.props)
     let { levels, extra } = metrics

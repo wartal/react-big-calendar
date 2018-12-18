@@ -214,6 +214,14 @@ class Calendar extends React.Component {
     resourceTitleAccessor: accessor,
 
     /**
+     * Resource image accessor
+     *
+     * @type {(func|string)}
+     */
+
+    resourceImageAccessor: accessor,
+
+    /**
      * Determines the current date/time which is highlighted in the views.
      *
      * The value affects which day is shaded and which time is shown as
@@ -668,6 +676,7 @@ class Calendar extends React.Component {
       dayWrapper: elementType,
       dateCellWrapper: elementType,
       timeGridHeader: elementType,
+      timeGridResourceHeader: elementType,
       timeSlotWrapper: elementType,
       timeGutterHeader: elementType,
 
@@ -734,6 +743,7 @@ class Calendar extends React.Component {
 
     resourceIdAccessor: 'id',
     resourceTitleAccessor: 'title',
+    resourceImageAccessor: 'img',
 
     longPressThreshold: 250,
     getNow: () => new Date(),
@@ -758,6 +768,7 @@ class Calendar extends React.Component {
     resourceAccessor,
     resourceIdAccessor,
     resourceTitleAccessor,
+    resourceImageAccessor,
     eventPropGetter,
     slotPropGetter,
     dayPropGetter,
@@ -798,6 +809,7 @@ class Calendar extends React.Component {
         resource: wrapAccessor(resourceAccessor),
         resourceId: wrapAccessor(resourceIdAccessor),
         resourceTitle: wrapAccessor(resourceTitleAccessor),
+        resourceImage: wrapAccessor(resourceImageAccessor),
       },
     }
   }
